@@ -5,7 +5,7 @@ const url = 'https://www.rstransitarios.com.br/';
 if (!/^https?:\/\//i.test(url)) {
   throw new Error('A URL deve começar com "http://" ou "https://"');
 }
-
+var teste = true
 // Configuração para teste de segurança
 const securityTest = autocannon({
   url,
@@ -29,12 +29,18 @@ securityTest.on('response', (client, statusCode, resBytes, responseTime) => {
   console.log(`Response time: ${responseTime} ms`);
 });
 
+securityTest.on('done', (result) => {
+  teste = true
+  console.log(result);
+});
 // Evento para tratar erros na requisição
 securityTest.on('error', (err) => {
   console.error(err);
 });
 
 // Loop infinito para execução contínua do teste de carga e segurança
-while (true) {
+while (teste == true) {
+  console.log('é igual')
   autocannon.track(securityTest, { renderProgressBar: true });
+  teste = false
 }
