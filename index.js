@@ -29,25 +29,12 @@ securityTest.on('response', (client, statusCode, resBytes, responseTime) => {
   console.log(`Response time: ${responseTime} ms`);
 });
 
-// Evento para tratar o fim do teste de segurança
-securityTest.on('done', (result) => {
-  console.log(result);
-});
-
 // Evento para tratar erros na requisição
 securityTest.on('error', (err) => {
   console.error(err);
 });
 
-// Função para executar o teste de carga infinitamente
-const runTests = async () => {
-  let running = true;
-  while (running) {
-    // Inicia o teste de carga
-    autocannon.track(securityTest, { renderProgressBar: true });
-    // Aguarda o término dos testes antes de continuar
-    await new Promise((resolve) => securityTest.once('done', resolve));
-  }
-};
-
-runTests();
+// Loop infinito para execução contínua do teste de carga e segurança
+while (true) {
+  autocannon.track(securityTest, { renderProgressBar: true });
+}
