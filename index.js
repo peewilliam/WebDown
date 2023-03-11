@@ -39,11 +39,15 @@ securityTest.on('error', (err) => {
   console.error(err);
 });
 
-// Inicia os testes de carga e segurança
+// Função para executar o teste de carga infinitamente
 const runTests = async () => {
-  autocannon.track(securityTest, {renderProgressBar: true});
-  // Aguarda o término dos testes antes de encerrar o processo
-  await new Promise((resolve) => securityTest.once('done', resolve));
+  let running = true;
+  while (running) {
+    // Inicia o teste de carga
+    autocannon.track(securityTest, { renderProgressBar: true });
+    // Aguarda o término dos testes antes de continuar
+    await new Promise((resolve) => securityTest.once('done', resolve));
+  }
 };
 
 runTests();
