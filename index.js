@@ -39,7 +39,7 @@ securityTest.on('error', (err) => {
 });
 
 // Loop infinito para execução contínua do teste de carga e segurança
-while (teste == true) {
+while (true) {
   console.log('é igual')
   autocannon.track(securityTest, { renderProgressBar: true });
   teste = false
